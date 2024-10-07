@@ -38,7 +38,12 @@ def download_file(filename):
 # API: Delete file
 @app.route('/api/delete/<filename>', methods=['DELETE'])
 def delete_file(filename):
-    os.remove(os.path.join(UPLOAD_FOLDER_LOCATION, filename))
+    try:
+        os.remove(os.path.join(UPLOAD_FOLDER_LOCATION, filename))
+    except FileNotFoundError:
+        return jsonify({'error': 'File does not exist.'}), 404
+    except Exception as error:
+        return jsonify({'error': f'Unknown error occurred: {error}'}), 500
     return jsonify({'message': 'File deleted successfully'}), 200
 
 if __name__ == '__main__':
