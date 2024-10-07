@@ -1,8 +1,10 @@
 import os.path
 
 from flask import Flask, request, jsonify, send_from_directory
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 HOME_PATH = os.path.expanduser('~')
 UPLOAD_FOLDER_LOCATION = os.path.join(HOME_PATH, 'AirNode/Uploads')
 os.makedirs(UPLOAD_FOLDER_LOCATION, exist_ok=True)
